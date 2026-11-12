@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Invitation to TaskMate</title>
+    <script>
+      (() => {
+        const { location, history } = window;
+        const values = new URLSearchParams(location.search).getAll("token");
+        const token = values.length === 1 ? values[0] : "";
+        // Remove query and fragment before loading assets. Keep the token
+        // in memory only, and never send it to a web endpoint.
+        if (location.search || location.hash) {
+          try {
+            history.replaceState(null, "", location.pathname);
+          } catch {
+            return;
+          }
+        }
+        if (token.length !== 64 || !/^[a-f0-9]+$/.test(token)) return;
+
+        document.addEventListener("DOMContentLoaded", () => {
+          const open = document.getElementById("open-app");
+          open.addEventListener("click", () => {
+            location.assign(
+              "taskmate:///invite?token=" + encodeURIComponent(token),
+            );
+          });
+          document.getElementById("invalid-invite").hidden = true;
+          document.getElementById("valid-invite").hidden = false;
+        });
+      })();
+    </script>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header><span class="brand">TaskMate</span></header>
+      <main>
+        <section aria-labelledby="title">
+          <p class="eyebrow">Shared Spaces</p>
+          <h1 id="title">Invitation to TaskMate</h1>
+          <p class="lead">
+            You’ve received an invitation to join a shared Space.
+          </p>
+          <div id="valid-invite" hidden>
+            <p>Open TaskMate to review the invitation before deciding whether to join.</p>
+            <div class="actions">
+              <button class="button primary" id="open-app" type="button">
+                Open TaskMate
+              </button>
+            </div>
+            <p class="note">
+              Don’t have TaskMate? Ask your inviter how to install it, then reopen
+              the original invitation link.
+            </p>
+          </div>
+          <p class="note" id="invalid-invite">
+            This invitation link is incomplete or unavailable. Reopen the
+            original link or ask your inviter for a new one.
+          </p>
+          <noscript><p>Enable JavaScript to open this invitation in TaskMate.</p></noscript>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["4NR9GM5S5M.com.satwiksakkirala.taskmate"],
+        "components": [{ "/": "/invite" }, { "/": "/invite/*" }]
+      }
+    ]
+  }
+}

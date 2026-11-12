@@ -1,0 +1,6 @@
+# GitHub Pages' branch build must publish the dot-directory used by iOS.
+include:
+  - .well-known
+exclude:
+  - tests
+  - README.md
